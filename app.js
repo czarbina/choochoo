@@ -24,18 +24,27 @@ var config = {
   var diffTime;
   var tRemainder;
   var minTilTrain;
-  var nextTrain
+  var nextTrain;
   
 
   $("#submitBtn").on("click", function(event) {
       event.preventDefault();
 
-      frequency = $("#frequency").val().trim()
-      trainName = $("#trainName").val().trim(),
-      destination = $("#destination").val().trim(),
-      tTimeInitial = $("#t-time-initial").val().trim(),
 
-      firstTimeConverted = moment(tTimeInitial, "hh:mm").subtract(1, "years");
+      database.ref().push({
+
+        trainName: $("#trainName").val().trim(),
+        destination: $("#destination").val().trim(),
+        // tTimeInitial: $("#t-time-initial").val().trim(),
+        frequency: $("#frequency").val().trim(),
+        tTimeInitial: $("#t-time-initial").val().trim()
+
+      });
+    });
+
+  database.ref().on("child_added", function(snapshot) {  
+
+  firstTimeConverted = moment(tTimeInitial, "hh:mm").subtract(1, "years");
       console.log(firstTimeConverted);
 
       timeCurrent = moment();
@@ -52,34 +61,21 @@ var config = {
       console.log("MINUTES TILL TRAIN: " + minTilTrain);
 
 	  nextTrain = moment().add(minTilTrain, "minutes");
-      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));
-
-
-      database.ref().push({
-
-        trainName: trainName,
-        destination: destination,
-        // tTimeInitial: $("#t-time-initial").val().trim(),
-        frequency: frequency,
-        nextTrain: nextTrain,
-        minTilTrain: minTilTrain
-
-      });
-    });
-
-  database.ref().on("child_added", function(snapshot) {      
+      console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));    
 
       // Log everything that's coming out of snapshot
       console.log(snapshot.val());
       var tname = snapshot.val().trainName;
       var tdest = snapshot.val().destination;
-      var tTime = snapshot.val().tTimeInitial;
+      // var tTime = snapshot.val().tTimeInitial;
       var tFreq = snapshot.val().frequency;
+      var nTrain = moment(nextTrain).format("hh:mm");
+      var minT = (snapshot.val().frequency) - (tRemainder);
 
    	  
 
       $("tbody").append("<tr><td>" + tname + "</td> <td>" + tdest + "</td><td>" + tFreq + "</td><td>" 
-      	+ tTime + "</td><td>" + "MINUTES AWAY" + "</td></tr>");
+      	+ nTrain + "</td><td>" + minT + "</td></tr>");
 
       // Handle the errors
     }, function(errorObject) {
