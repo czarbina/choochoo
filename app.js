@@ -44,7 +44,7 @@ var config = {
 
   database.ref().on("child_added", function(snapshot) {  
 
-  firstTimeConverted = moment(tTimeInitial, "hh:mm").subtract(1, "years");
+  firstTimeConverted = moment(snapshot.val().tTimeInitial, "hh:mm").subtract(1, "years");
       console.log(firstTimeConverted);
 
       timeCurrent = moment();
@@ -54,13 +54,13 @@ var config = {
       diffTime = moment().diff(moment(firstTimeConverted), "minutes");
       console.log("DIFFERENCE IN TIME: " + diffTime);
 
-      tRemainder = diffTime % frequency;
+      tRemainder = diffTime % snapshot.val().frequency;
       console.log(tRemainder);
 
-      minTilTrain = frequency - tRemainder;
+      minTilTrain = snapshot.val().frequency - tRemainder;
       console.log("MINUTES TILL TRAIN: " + minTilTrain);
 
-	  nextTrain = moment().add(minTilTrain, "minutes");
+    nextTrain = moment().add(minTilTrain, "minutes");
       console.log("ARRIVAL TIME: " + moment(nextTrain).format("hh:mm"));    
 
       // Log everything that's coming out of snapshot
@@ -72,16 +72,12 @@ var config = {
       var nTrain = moment(nextTrain).format("hh:mm");
       var minT = (snapshot.val().frequency) - (tRemainder);
 
-   	  
+      
 
       $("tbody").append("<tr><td>" + tname + "</td> <td>" + tdest + "</td><td>" + tFreq + "</td><td>" 
-      	+ nTrain + "</td><td>" + minT + "</td></tr>");
+        + nTrain + "</td><td>" + minT + "</td></tr>");
 
       // Handle the errors
     }, function(errorObject) {
       console.log("Errors handled: " + errorObject.code);
     });
-
-  	
-
- 

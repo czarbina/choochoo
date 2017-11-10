@@ -1,0 +1,58 @@
+
+body {
+	margin-bottom: 20px;
+
+}
+	
+#table {
+	width: 1000px;
+	margin:auto;
+	margin-bottom: 30px;
+}
+
+#newTrain {
+	width: 1000px;
+	margin:auto;
+}
+
+.jumbotron {
+	background-image: url("http://photoresearch.beethomas.com/wp-content/main/2011_10/DSC_0356.jpg");
+	background-size: cover;
+	height: 250px;
+	width: 1000px;
+	margin:auto;
+	margin-bottom: 20px;
+	margin-top: 20px;
+	color: white;
+	font-size: 100px;
+	text-align: center;
+	font-family: 'Aclonica', sans-serif;
+
+}	
+
+.panel-default > .panel-heading  {
+	background-color: #a3d160;
+	letter-spacing: 6px;
+	font-size: 20px;
+}
+
+form {
+	padding: 15px;
+}
+
+.table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(2n+1) > th {
+   background-color: #def7ca;
+}
+
+.btn {
+	background-color: #a3d160;
+	color: black;
+  	border-color: #a3d160;
+}
+
+.btn:hover {
+	background-color: #3d994f;
+	color: white;
+	border-color: #3d994f;
+
+}
